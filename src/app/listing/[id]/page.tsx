@@ -1,7 +1,6 @@
 import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
-import { useRouter } from "next/navigation";
 
 type Props = {
   params: { id: string };
