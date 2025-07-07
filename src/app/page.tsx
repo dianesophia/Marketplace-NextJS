@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
-import { ShineBorder } from "@/components/magicui/shine-border";
 
 type Listing = {
   id: string;

@@ -8,7 +8,7 @@ type Props = {
   sellerEmail: string;
 };
 
-export default function MessageForm({ listingId, sellerEmail }: Props) {
+export default function MessageForm({ listingId }: Props) {
   const [buyerEmail, setBuyerEmail] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
