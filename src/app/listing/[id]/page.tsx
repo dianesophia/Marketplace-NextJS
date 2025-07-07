@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
 import Link from "next/link";
-import Image from "next/image";
+
 
 // ✅ Correct props type for app router dynamic routes
 interface ListingDetailPageProps {
