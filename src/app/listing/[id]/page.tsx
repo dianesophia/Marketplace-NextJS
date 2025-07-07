@@ -4,12 +4,11 @@ import MessageForm from "./MessageForm";
 import Link from "next/link";
 import Image from "next/image";
 
-
-export default async function ListingDetail({
-  params,
-}: {
+type Props = {
   params: { id: string };
-}) {
+};
+
+export default async function ListingDetail({ params }: Props) {
   const { id } = params;
 
   const { data: listing, error } = await supabase
