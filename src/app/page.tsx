@@ -42,31 +42,31 @@ export default function Home() {
     "Toys & Games",
     "Buy and sell groups",
   ];
-  
 
   useEffect(() => {
     const fetchListings = async () => {
       setLoading(true);
       let query = supabase.from("listings").select("*");
-  
+
       if (search) query = query.ilike("title", `%${search}%`);
       if (category) query = query.eq("category", category);
-  
+
       const { data, error } = await query;
       if (!error) setListings(data as Listing[]);
       else console.error("Error fetching listings:", error);
-  
+
       setLoading(false);
     };
-  
+
     fetchListings();
   }, [search, category]);
-  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white px-4 py-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-blue-700 mb-6">🛍️ Mini Marketplace</h1>
+        <h1 className="text-4xl font-bold text-center text-blue-700 mb-6">
+          🛍️ Mini Marketplace
+        </h1>
 
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar */}
@@ -123,30 +123,31 @@ export default function Home() {
 
             {/* Listings */}
             {loading ? (
-              <p className="text-center text-gray-500">Loading listings...</p>
+              <div className="text-center text-gray-500">Loading listings...</div>
             ) : listings.length === 0 ? (
-              <p className="text-center text-gray-500">No listings found.</p>
+              <div className="text-center text-gray-500">No listings found.</div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                  
                 {listings.map((item) => (
                   <Link
                     key={item.id}
                     href={`/listing/${item.id}`}
                     className="border rounded-lg overflow-hidden hover:shadow-lg transition bg-white"
                   >
-                   <Image
-  src={item.image_url || "/placeholder.png"}
-  alt={item.title}
-  width={400}
-  height={192} // adjust based on actual size
-  className="w-full h-48 object-cover"
-/>
-                    <div className="p-4">
-                      
-                      <h2 className="text-lg font-semibold">{item.title}</h2>
-                      <p className="text-blue-600 font-bold">${item.price}</p>
-                      <p className="text-sm text-gray-500">{item.category}</p>
+                    <div>
+
+                    <img
+                      src={item.image_url || "/placeholder.png"}
+                      alt={item.title}
+                      className="w-full h-48 object-cover"
+                    />
+                    
+
+                      <div className="p-4">
+                        <h2 className="text-lg font-semibold">{item.title}</h2>
+                        <p className="text-blue-600 font-bold">${item.price}</p>
+                        <p className="text-sm text-gray-500">{item.category}</p>
+                      </div>
                     </div>
                   </Link>
                 ))}
