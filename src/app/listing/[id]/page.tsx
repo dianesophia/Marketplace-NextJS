@@ -4,11 +4,14 @@ import MessageForm from "./MessageForm";
 import Link from "next/link";
 import Image from "next/image";
 
-type Props = {
-  params: { id: string };
-};
+// ✅ Correct props type for app router dynamic routes
+interface ListingDetailPageProps {
+  params: {
+    id: string;
+  };
+}
 
-export default async function ListingDetail({ params }: Props) {
+export default async function ListingDetail({ params }: ListingDetailPageProps) {
   const { id } = params;
 
   const { data: listing, error } = await supabase
@@ -38,13 +41,10 @@ export default async function ListingDetail({ params }: Props) {
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-200">
         {/* Left: Image */}
         <div className="md:w-1/2 bg-blue-100 flex items-center justify-center p-6">
-          <Image
+          <img
             src={listing.image_url || "/placeholder.png"}
             alt={listing.title}
-            width={600}
-            height={500}
             className="w-full h-[500px] object-cover rounded-xl border shadow-md"
-            style={{ objectFit: "cover" }}
           />
         </div>
 
