@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
+import Image from "next/image";
 
 type Listing = {
   id: string;
@@ -44,22 +45,23 @@ export default function Home() {
   
 
   useEffect(() => {
+    const fetchListings = async () => {
+      setLoading(true);
+      let query = supabase.from("listings").select("*");
+  
+      if (search) query = query.ilike("title", `%${search}%`);
+      if (category) query = query.eq("category", category);
+  
+      const { data, error } = await query;
+      if (!error) setListings(data as Listing[]);
+      else console.error("Error fetching listings:", error);
+  
+      setLoading(false);
+    };
+  
     fetchListings();
   }, [search, category]);
-
-  const fetchListings = async () => {
-    setLoading(true);
-    let query = supabase.from("listings").select("*");
-
-    if (search) query = query.ilike("title", `%${search}%`);
-    if (category) query = query.eq("category", category);
-
-    const { data, error } = await query;
-    if (!error) setListings(data as Listing[]);
-    else console.error("Error fetching listings:", error);
-
-    setLoading(false);
-  };
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white px-4 py-8">
@@ -133,11 +135,13 @@ export default function Home() {
                     href={`/listing/${item.id}`}
                     className="border rounded-lg overflow-hidden hover:shadow-lg transition bg-white"
                   >
-                    <img
-                      src={item.image_url || "/placeholder.png"}
-                      alt={item.title}
-                      className="w-full h-48 object-cover"
-                    />
+                   <Image
+  src={item.image_url || "/placeholder.png"}
+  alt={item.title}
+  width={400}
+  height={192} // adjust based on actual size
+  className="w-full h-48 object-cover"
+/>
                     <div className="p-4">
                       
                       <h2 className="text-lg font-semibold">{item.title}</h2>
