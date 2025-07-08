@@ -2,12 +2,13 @@ import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
 import Link from "next/link";
+import React from "react";
 
-export default async function ListingDetail({
-  params,
-}: {
+interface PageProps {
   params: { id: string };
-}) {
+}
+
+const ListingPage = async ({ params }: PageProps) => {
   const { id } = params;
 
   const { data: listing, error } = await supabase
@@ -68,4 +69,6 @@ export default async function ListingDetail({
       </div>
     </div>
   );
-}
+};
+
+export default ListingPage;
