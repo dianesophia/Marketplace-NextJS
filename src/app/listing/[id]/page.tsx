@@ -2,13 +2,12 @@ import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
 import Link from "next/link";
-import React from "react";
 
-interface PageProps {
+export default async function ListingPage({
+  params,
+}: {
   params: { id: string };
-}
-
-const ListingPage = async ({ params }: PageProps) => {
+}) {
   const { id } = params;
 
   const { data: listing, error } = await supabase
@@ -46,9 +45,6 @@ const ListingPage = async ({ params }: PageProps) => {
           <div className="space-y-4">
             <h1 className="text-3xl font-bold text-blue-700">{listing.title}</h1>
             <p className="text-2xl text-blue-600 font-semibold">${listing.price}</p>
-            <p className="text-sm text-gray-500">
-              📍 Listed just now in <span className="font-medium">Palo Alto, CA</span>
-            </p>
 
             <div className="mt-4">
               <h2 className="text-md font-semibold text-gray-700 mb-1">🧑 Seller</h2>
@@ -69,6 +65,4 @@ const ListingPage = async ({ params }: PageProps) => {
       </div>
     </div>
   );
-};
-
-export default ListingPage;
+}
