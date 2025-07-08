@@ -1,18 +1,10 @@
-// app/listing/[id]/page.tsx or wherever your dynamic route is
 import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
 import Link from "next/link";
 
-// ✅ Define the correct type for params
-type PageProps = {
-  params: {
-    id: string;
-  };
-};
-
-export default async function ListingPage({ params }: PageProps) {
-  const { id } = params;
+export default async function ListingPage({ params }: { params: any }) {
+  const id = params.id;
 
   const { data: listing, error } = await supabase
     .from("listings")
