@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
+import Image from "next/image";
 
 type Listing = {
   id: string;
@@ -134,14 +135,13 @@ export default function Home() {
                     className="border rounded-lg overflow-hidden hover:shadow-lg transition bg-white"
                   >
                     <div>
-
-                    <img
-                      src={item.image_url || "/placeholder.png"}
-                      alt={item.title}
-                      className="w-full h-48 object-cover"
-                    />
-                    
-
+                      <Image
+                        src={item.image_url || "/placeholder.png"}
+                        alt={item.title}
+                        className="w-full h-48 object-cover"
+                        width={200}
+                        height={200}
+                      />
                       <div className="p-4">
                         <h2 className="text-lg font-semibold">{item.title}</h2>
                         <p className="text-blue-600 font-bold">${item.price}</p>

@@ -3,6 +3,7 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const categories = [
   "Vehicles",
@@ -203,9 +204,11 @@ export default function CreateListing() {
             <div className="flex flex-col gap-3">
               <div className="w-full aspect-video bg-white rounded-lg overflow-hidden border">
                 {previewUrl ? (
-                  <img
+                  <Image
                     src={previewUrl}
                     alt="Preview"
+                    width={300}
+                    height={150}
                     className="w-full h-full object-cover"
                   />
                 ) : (

@@ -3,8 +3,15 @@ import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
 import Link from "next/link";
 
-export default async function ListingPage({ params }: { params: any }) {
-  const id = params.id;
+// ✅ Define type for props with params
+interface ListingPageProps {
+  params: {
+    id: string;
+  };
+}
+
+export default async function ListingPage({ params }: ListingPageProps) {
+  const { id } = params;
 
   const { data: listing, error } = await supabase
     .from("listings")
