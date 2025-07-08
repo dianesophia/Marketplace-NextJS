@@ -1,14 +1,17 @@
+// app/listing/[id]/page.tsx or wherever your dynamic route is
 import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
 import Link from "next/link";
 
-// ✅ Correct usage for dynamic route props in Next.js App Router
-export default async function ListingPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+// ✅ Define the correct type for params
+type PageProps = {
+  params: {
+    id: string;
+  };
+};
+
+export default async function ListingPage({ params }: PageProps) {
   const { id } = params;
 
   const { data: listing, error } = await supabase
