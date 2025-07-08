@@ -15,3 +15,11 @@ DealnGo is a modern and responsive online marketplace built using **Next.js 14**
 - ✅ Fully responsive and mobile-friendly
 
 ---
+
+## 🧑‍💻 Tech Stack
+
+- **Framework**: [Next.js 14](https://nextjs.org/)
+- **Backend**: [Supabase](https://supabase.com/) (Auth, Storage, Realtime DB)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Icons & Effects**: `react-icons`, `magicui` components (lens, hover buttons)
+- **Hosting**: Vercel / Netlify (optional)
