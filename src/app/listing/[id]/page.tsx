@@ -1,11 +1,11 @@
 import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
-import MessageForm from "./MessageForm";
 import Link from "next/link";
 import Image from "next/image";
+import MessageForm from "./MessageForm";
 
-export default async function ListingPage({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function ListingPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
 
   const { data: listing, error } = await supabase
     .from("listings")
@@ -14,7 +14,6 @@ export default async function ListingPage({ params }: { params: { id: string } }
     .single();
 
   if (!listing || error) {
-    console.error("Error loading listing:", error);
     return notFound();
   }
 
