@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
 import Link from "next/link";
 
+// ✅ Correct usage for dynamic route props in Next.js App Router
 export default async function ListingPage({
   params,
 }: {
