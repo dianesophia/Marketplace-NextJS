@@ -2,15 +2,9 @@ import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
 import Link from "next/link";
+import Image from "next/image";
 
-// ✅ Define type for props with params
-interface ListingPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default async function ListingPage({ params }: ListingPageProps) {
+export default async function ListingPage({ params }: { params: { id: string } }) {
   const { id } = params;
 
   const { data: listing, error } = await supabase
@@ -37,10 +31,14 @@ export default async function ListingPage({ params }: ListingPageProps) {
 
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-200">
         <div className="md:w-1/2 bg-blue-100 flex items-center justify-center p-6">
-          <img
+          <Image
             src={listing.image_url || "/placeholder.png"}
             alt={listing.title}
+            width={500}
+            height={500}
             className="w-full h-[500px] object-cover rounded-xl border shadow-md"
+            style={{ objectFit: "cover" }}
+            priority
           />
         </div>
 
