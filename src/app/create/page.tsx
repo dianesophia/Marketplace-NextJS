@@ -100,39 +100,37 @@ export default function CreateListing() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white px-4 py-10">
-      <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-8">
-        {/* Back Button */}
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-white to-blue-50 px-6 py-12 font-sans">
+      <div className="max-w-7xl mx-auto backdrop-blur-md bg-white/80 border border-blue-100 rounded-2xl p-10 shadow-2xl">
         <button
-  onClick={() => router.back()}
-  className="mb-6 inline-flex items-center text-sm text-blue-600 hover:underline"
->
-  ← Back
-</button>
+          onClick={() => router.back()}
+          className="mb-6 inline-flex items-center text-sm text-blue-600 hover:underline"
+        >
+          ← Back to listing
+        </button>
 
-
-        <h1 className="text-3xl font-bold text-blue-700 mb-8 text-center">
+        <h1 className="text-4xl font-bold text-center text-blue-700 mb-10 drop-shadow">
           🛍️ Create New Listing
         </h1>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* --- FORM --- */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* FORM */}
+          <form onSubmit={handleSubmit} className="space-y-6">
             <input
               name="title"
-              placeholder="Title"
+              placeholder="Listing Title"
               onChange={handleChange}
               required
-              className="w-full border px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="w-full border px-4 py-3 rounded-lg bg-white shadow focus:outline-none focus:ring-2 focus:ring-sky-300"
             />
 
             <textarea
               name="description"
-              placeholder="Description"
+              placeholder="Detailed Description"
               onChange={handleChange}
               rows={4}
               required
-              className="w-full border px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="w-full border px-4 py-3 rounded-lg bg-white shadow focus:outline-none focus:ring-2 focus:ring-sky-300"
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -142,7 +140,7 @@ export default function CreateListing() {
                 placeholder="Price ($)"
                 onChange={handleChange}
                 required
-                className="w-full border px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full border px-4 py-3 rounded-lg bg-white shadow focus:outline-none focus:ring-2 focus:ring-sky-300"
               />
               <input
                 name="email"
@@ -150,7 +148,7 @@ export default function CreateListing() {
                 placeholder="Your Email"
                 onChange={handleChange}
                 required
-                className="w-full border px-4 py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                className="w-full border px-4 py-3 rounded-lg bg-white shadow focus:outline-none focus:ring-2 focus:ring-sky-300"
               />
             </div>
 
@@ -159,9 +157,9 @@ export default function CreateListing() {
               onChange={handleChange}
               value={form.category}
               required
-              className="w-full border px-4 py-3 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-300"
+              className="w-full border px-4 py-3 rounded-lg bg-white shadow focus:outline-none focus:ring-2 focus:ring-sky-300"
             >
-              <option value="">Select Category</option>
+              <option value="">Select a Category</option>
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
                   {cat}
@@ -169,69 +167,71 @@ export default function CreateListing() {
               ))}
             </select>
 
+            {/* Image Upload */}
             <div>
-  <label
-    htmlFor="image-upload"
-    className="flex items-center justify-center w-full px-4 py-3 border rounded-md bg-white text-gray-700 cursor-pointer hover:bg-blue-50 focus-within:ring-2 focus-within:ring-blue-300"
-  >
-    📁 {image ? "Change Image" : "Upload Image"}
-  </label>
-  <input
-    id="image-upload"
-    type="file"
-    accept="image/*"
-    onChange={handleImageChange}
-    className="hidden"
-  />
-  {image && (
-    <p className="mt-2 text-sm text-gray-500 truncate">Selected: {image.name}</p>
-  )}
-</div>
-
+              <label
+                htmlFor="image-upload"
+                className="flex items-center justify-center w-full px-4 py-3 border rounded-lg bg-white text-gray-700 cursor-pointer hover:bg-blue-50 transition focus-within:ring-2 focus-within:ring-sky-300"
+              >
+                📸 {image ? "Change Image" : "Upload Image"}
+              </label>
+              <input
+                id="image-upload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="hidden"
+              />
+              {image && (
+                <p className="mt-2 text-sm text-gray-500 truncate">
+                  Selected: {image.name}
+                </p>
+              )}
+            </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-200"
+              className="w-full bg-gradient-to-r from-blue-600 to-sky-500 text-white py-3 rounded-lg shadow-md hover:scale-[1.02] transition-transform"
             >
-              {loading ? "Creating..." : "Create Listing"}
+              {loading ? "Creating..." : "✨ Create Listing"}
             </button>
           </form>
 
-          {/* --- PREVIEW --- */}
-          <div className="bg-gray-50 border rounded-lg p-6 shadow-inner">
-            <h2 className="text-xl font-semibold mb-4 text-blue-700 text-center">🖼️ Live Preview</h2>
-            <div className="flex flex-col gap-3">
-              <div className="w-full aspect-video bg-white rounded-lg overflow-hidden border">
-                {previewUrl ? (
-                  <Image
-                    src={previewUrl}
-                    alt="Preview"
-                    width={300}
-                    height={150}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="h-full flex items-center justify-center text-gray-400">
-                    No Image Selected
-                  </div>
-                )}
-              </div>
+          {/* PREVIEW */}
+          <div className="bg-white rounded-xl shadow-lg p-6 border relative group hover:shadow-xl transition">
+            <h2 className="text-xl font-bold text-center text-blue-700 mb-4">
+              🖼️ Live Preview
+            </h2>
+            <div className="w-full aspect-video bg-gray-100 rounded-lg overflow-hidden border mb-4">
+              {previewUrl ? (
+                <Image
+                  src={previewUrl}
+                  alt="Preview"
+                  width={400}
+                  height={250}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <div className="h-full flex items-center justify-center text-gray-400">
+                  No Image Selected
+                </div>
+              )}
+            </div>
 
-              <div className="space-y-1 mt-2 text-sm">
-                <h3 className="text-lg font-bold text-gray-800">{form.title || "Item Title"}</h3>
-                <p className="text-gray-600">{form.description || "Item description goes here..."}</p>
-                <p className="text-blue-600 font-bold text-lg">
-                  {form.price ? `$${form.price}` : "$0.00"}
-                </p>
-                <p className="text-gray-500">{form.category || "No category selected"}</p>
-                <p className="text-gray-400">
-                  Posted by: {form.email || "email@example.com"}
-                </p>
-                <p className="text-gray-400">
-                  {new Date().toLocaleString()}
-                </p>
-              </div>
+            <div className="space-y-1 text-sm">
+              <h3 className="text-lg font-bold text-gray-800">
+                {form.title || "Item Title"}
+              </h3>
+              <p className="text-gray-600">
+                {form.description || "Item description goes here..."}
+              </p>
+              <p className="text-blue-600 font-bold text-lg">
+                {form.price ? `$${form.price}` : "$0.00"}
+              </p>
+              <p className="text-gray-500">{form.category || "No category selected"}</p>
+              <p className="text-gray-400">Posted by: {form.email || "email@example.com"}</p>
+              <p className="text-gray-400">{new Date().toLocaleString()}</p>
             </div>
           </div>
         </div>

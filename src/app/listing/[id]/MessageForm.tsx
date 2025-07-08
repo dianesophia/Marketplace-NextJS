@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { InteractiveHoverButton } from "@/components/magicui/interactive-hover-button";
 
 type Props = {
   listingId: string;
@@ -59,13 +60,13 @@ export default function MessageForm({ listingId }: Props) {
           onChange={(e) => setMessage(e.target.value)}
           className="w-full border p-2 rounded"
         />
-        <button
+        <InteractiveHoverButton
           type="submit"
           className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
           disabled={status === "sending"}
         >
           {status === "sending" ? "Sending..." : "Send Message"}
-        </button>
+        </InteractiveHoverButton>
         {status === "sent" && <p className="text-green-600">Message sent successfully ✅</p>}
         {status === "error" && <p className="text-red-600">Failed to send message ❌</p>}
       </form>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import Link from "next/link";
 import Image from "next/image";
+import { FaSearch, FaTags } from "react-icons/fa";
 
 type Listing = {
   id: string;
@@ -62,43 +63,46 @@ export default function Home() {
   }, [search, category]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-sky-100 via-white to-blue-50 px-4 py-10 font-sans">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-blue-700 mb-6">
-          🛍️ Mini Marketplace
+        <h1 className="text-5xl font-extrabold text-center text-blue-800 mb-10 drop-shadow">
+          🛍️ DealnGo Marketplace
         </h1>
 
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-10">
           {/* Sidebar */}
-          <aside className="md:w-64 bg-white p-4 rounded-lg shadow">
+          <aside className="md:w-64 bg-white/60 backdrop-blur-lg border border-blue-100 p-5 rounded-xl shadow-md">
             <Link
               href="/create"
-              className="block bg-blue-600 hover:bg-blue-700 text-white text-center mb-6 py-2 rounded"
+              className="block bg-gradient-to-r from-blue-600 to-sky-500 hover:from-blue-700 hover:to-sky-600 text-white text-center font-semibold mb-6 py-2 rounded-lg shadow"
             >
               + Create Listing
             </Link>
 
-            <h2 className="text-lg font-semibold mb-4">Categories</h2>
+            <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-4">
+              <FaTags /> Categories
+            </h2>
+
             <ul className="space-y-2">
               <li>
                 <button
-                  className={`w-full text-left px-3 py-2 rounded ${
+                  className={`w-full text-left px-3 py-2 rounded-lg transition ${
                     category === ""
-                      ? "bg-blue-100 text-blue-700 font-medium"
-                      : "hover:bg-gray-100 text-gray-700"
+                      ? "bg-blue-100 text-blue-700 font-medium shadow"
+                      : "hover:bg-blue-50 text-gray-700"
                   }`}
                   onClick={() => setCategory("")}
                 >
-                  All
+                  All Categories
                 </button>
               </li>
               {categories.map((cat) => (
                 <li key={cat}>
                   <button
-                    className={`w-full text-left px-3 py-2 rounded ${
+                    className={`w-full text-left px-3 py-2 rounded-lg transition ${
                       category === cat
-                        ? "bg-blue-100 text-blue-700 font-medium"
-                        : "hover:bg-gray-100 text-gray-700"
+                        ? "bg-blue-100 text-blue-700 font-medium shadow"
+                        : "hover:bg-blue-50 text-gray-700"
                     }`}
                     onClick={() => setCategory(cat)}
                   >
@@ -111,11 +115,13 @@ export default function Home() {
 
           {/* Main Content */}
           <main className="flex-1">
-            <div className="flex mb-6">
+            {/* Search Bar */}
+            <div className="relative mb-8">
+              <FaSearch className="absolute left-4 top-3 text-gray-400" />
               <input
                 type="text"
-                className="w-full border px-4 py-2 rounded shadow-sm focus:outline-none focus:ring focus:ring-blue-200"
-                placeholder="🔍 Search listings..."
+                className="w-full border border-gray-300 px-12 py-3 rounded-full shadow focus:outline-none focus:ring-2 focus:ring-sky-300"
+                placeholder="Search for listings..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -123,7 +129,9 @@ export default function Home() {
 
             {/* Listings */}
             {loading ? (
-              <div className="text-center text-gray-500">Loading listings...</div>
+              <div className="text-center text-gray-500 animate-pulse">
+                Loading listings...
+              </div>
             ) : listings.length === 0 ? (
               <div className="text-center text-gray-500">No listings found.</div>
             ) : (
@@ -132,21 +140,30 @@ export default function Home() {
                   <Link
                     key={item.id}
                     href={`/listing/${item.id}`}
-                    className="border rounded-lg overflow-hidden hover:shadow-lg transition bg-white"
+                    className="border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl bg-white transition-all duration-200 group"
                   >
-                    <div>
+                    <div className="relative">
                       <Image
                         src={item.image_url || "/placeholder.png"}
                         alt={item.title}
-                        className="w-full h-48 object-cover"
-                        width={200}
+                        className="w-full h-48 object-cover transition group-hover:scale-105"
+                        width={300}
                         height={200}
                       />
-                      <div className="p-4">
-                        <h2 className="text-lg font-semibold">{item.title}</h2>
-                        <p className="text-blue-600 font-bold">${item.price}</p>
-                        <p className="text-sm text-gray-500">{item.category}</p>
-                      </div>
+                      <span className="absolute top-2 right-2 bg-white/90 text-xs px-2 py-1 rounded-full shadow text-gray-600">
+                        {item.category}
+                      </span>
+                    </div>
+                    <div className="p-4">
+                      <h2 className="text-xl font-bold text-gray-800 truncate">
+                        {item.title}
+                      </h2>
+                      <p className="text-sky-600 font-semibold text-lg">
+                        ${item.price}
+                      </p>
+                      <p className="text-sm text-gray-500 mt-1">
+                        {item.description.slice(0, 50)}...
+                      </p>
                     </div>
                   </Link>
                 ))}
