@@ -3,15 +3,11 @@ import { notFound } from "next/navigation";
 import MessageForm from "./MessageForm";
 import Link from "next/link";
 
-
-// ✅ Correct props type for app router dynamic routes
-interface ListingDetailPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default async function ListingDetail({ params }: ListingDetailPageProps) {
+export default async function ListingDetail({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { id } = params;
 
   const { data: listing, error } = await supabase
@@ -27,7 +23,6 @@ export default async function ListingDetail({ params }: ListingDetailPageProps) 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-white py-10 px-4">
-      {/* Back Button */}
       <div className="max-w-5xl mx-auto mb-4">
         <Link
           href="/"
@@ -37,9 +32,7 @@ export default async function ListingDetail({ params }: ListingDetailPageProps) 
         </Link>
       </div>
 
-      {/* Listing Card */}
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-200">
-        {/* Left: Image */}
         <div className="md:w-1/2 bg-blue-100 flex items-center justify-center p-6">
           <img
             src={listing.image_url || "/placeholder.png"}
@@ -48,7 +41,6 @@ export default async function ListingDetail({ params }: ListingDetailPageProps) 
           />
         </div>
 
-        {/* Right: Info */}
         <div className="md:w-1/2 p-8 flex flex-col justify-between">
           <div className="space-y-4">
             <h1 className="text-3xl font-bold text-blue-700">{listing.title}</h1>
